@@ -1,0 +1,1 @@
+Algorytm mrówkowy rozwiązujący problem komiwojażera
