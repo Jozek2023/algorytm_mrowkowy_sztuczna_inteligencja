@@ -1,0 +1,5 @@
+Warszawa;52;13
+Lodz;32;21
+Bydgoszcz;45;11
+Olsztyn;45;47
+Katowice;87;56
