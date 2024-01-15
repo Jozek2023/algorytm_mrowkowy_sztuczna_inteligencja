@@ -7,6 +7,10 @@ public class City {
 
     private String nameOfCity;
 
+    @Override
+    public String toString() {
+        return nameOfCity;
+    }
 
     public City(double x, double y, String nameOfCity) {
         this.x = x;

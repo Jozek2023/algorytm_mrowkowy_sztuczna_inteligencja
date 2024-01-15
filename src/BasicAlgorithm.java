@@ -35,7 +35,7 @@ public class BasicAlgorithm {
         totalPathDistance += getDistanceToStartingPointFromLastVisitedCity(visitedCities, distancesMap);
         visitedCities.add(cityNames.get(0));
 
-        System.out.println(distancesMap);
+        System.out.println(visitedCities);
         System.out.println(totalPathDistance);
     }
 
