@@ -19,11 +19,11 @@ public class BasicAlgorithm {
         List<String> visitedCities = new ArrayList<>();
 
         double totalPathDistance = 0.0;
-        var distancesMap = distanceCalc.initDistances(cities);
+        var distancesMap = distanceCalc.initDistances(cities, 0, 0);
         String currentCity = cityNames.get(0);
 
         visitedCities.add(cityNames.get(0)); // start from first city
-        while (visitedCities.size() != cities.size()){
+        while (visitedCities.size() != cities.size()) {
             List<DistanceToCity> sortedDistancesFromCity = getDistancesFromCitySorted(distancesMap.get(currentCity));
 
             DistanceToCity cityToGoNow = getClosestUnvisitedDistanceToCity(visitedCities, sortedDistancesFromCity);
@@ -52,7 +52,7 @@ public class BasicAlgorithm {
         throw new IndexOutOfBoundsException();
     }
 
-    public List<DistanceToCity> getDistancesFromCitySorted(List<DistanceToCity> distanceToCities){
+    public List<DistanceToCity> getDistancesFromCitySorted(List<DistanceToCity> distanceToCities) {
         return distanceToCities.stream().sorted().toList();
     }
 }

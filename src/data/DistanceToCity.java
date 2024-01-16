@@ -1,24 +1,34 @@
 package data;
 
-public class DistanceToCity implements Comparable<DistanceToCity>{
+public class DistanceToCity implements Comparable<DistanceToCity> {
     private final String cityDestination;
     private final double distanceTo;
-    private double pheromoneLevel;
+    private final int pheromoneMin;
+    private final int pheromoneMax;
+    private int pheromoneLevel;
 
-    public void addToPheromoneLevel(double pheromoneLevelAdd) {
-        this.pheromoneLevel += pheromoneLevelAdd;
+    public DistanceToCity(String cityDestination, double distanceTo, int pheromoneMin, int pheromoneMax) {
+        this.cityDestination = cityDestination;
+        this.distanceTo = distanceTo;
+        this.pheromoneMin = pheromoneMin;
+        this.pheromoneLevel = pheromoneMin;
+        this.pheromoneMax = pheromoneMax;
+    }
+
+    public void addToPheromoneLevel(int pheromoneLevelAdd) {
+        final int changeToBeMade = pheromoneLevel + pheromoneLevelAdd;
+        if (changeToBeMade >= pheromoneMin && changeToBeMade <= pheromoneMax) {
+            pheromoneLevel = changeToBeMade;
+        }
     }
 
     public double getPheromoneLevel() {
         return pheromoneLevel;
     }
 
-    public void setPheromoneLevel(double pheromoneLevel) {
-        this.pheromoneLevel = pheromoneLevel;
-    }
     @Override
     public String toString() {
-        return "distance to " + cityDestination + " = " +distanceTo;
+        return "distance to " + cityDestination + " = " + distanceTo;
     }
 
     public String getCityDestination() {
@@ -27,19 +37,6 @@ public class DistanceToCity implements Comparable<DistanceToCity>{
 
     public double getDistanceTo() {
         return distanceTo;
-    }
-
-    public DistanceToCity(String cityDestination, double distanceTo) {
-        this.cityDestination = cityDestination;
-        this.distanceTo = distanceTo;
-        this.pheromoneLevel = 0.1;
-
-    }
-
-    public DistanceToCity(String cityDestination, double distanceTo, double pheromoneLevel) {
-        this.cityDestination = cityDestination;
-        this.distanceTo = distanceTo;
-        this.pheromoneLevel = pheromoneLevel;
     }
 
     @Override

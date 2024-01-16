@@ -7,15 +7,15 @@ public class City {
 
     private String nameOfCity;
 
-    @Override
-    public String toString() {
-        return nameOfCity;
-    }
-
     public City(double x, double y, String nameOfCity) {
         this.x = x;
         this.y = y;
         this.nameOfCity = nameOfCity;
+    }
+
+    @Override
+    public String toString() {
+        return nameOfCity;
     }
 
     public double getX() {
@@ -41,8 +41,6 @@ public class City {
     public void setNameOfCity(String nameOfCity) {
         this.nameOfCity = nameOfCity;
     }
-
-
 
 
 }
