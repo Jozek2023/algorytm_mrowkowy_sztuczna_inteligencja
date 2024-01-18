@@ -22,6 +22,10 @@ public class DistanceToCity implements Comparable<DistanceToCity> {
         }
     }
 
+    public void resetPheromoneLevel() {
+        pheromoneLevel = pheromoneMin;
+    }
+
     public double getPheromoneLevel() {
         return pheromoneLevel;
     }

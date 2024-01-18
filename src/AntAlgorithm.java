@@ -25,7 +25,7 @@ public class AntAlgorithm {
         double bestDistanceTotal = 9999999999999.99;
         var distancesMap = distanceCalc.initDistances(cities, pheromoneMin, pheromoneMax);
         List<String> bestPath = new ArrayList<>();
-
+        int stagnateCounter = 0;
         for (int i = 0; i < roundCount; i++) {
             List<Ant> antsInThisRound = new ArrayList<>();
             for (int j = 0; j < antCount; j++) {
@@ -50,6 +50,9 @@ public class AntAlgorithm {
                 if (totalPathDistance < bestDistanceTotal) {
                     bestDistanceTotal = totalPathDistance;
                     bestPath = ant.getVisitedCities();
+                    stagnateCounter = 0;
+                } else {
+                    stagnateCounter++;
                 }
             }
             for (Ant ant : antsInThisRound) {
@@ -63,6 +66,13 @@ public class AntAlgorithm {
                     distancesMap.get(cityTo).stream().filter(cd -> !cd.getCityDestination().equals(cityFrom)).findFirst().ifPresent(d -> d.addToPheromoneLevel(pheromoneLoosePerRound));
                     distancesMap.get(cityFrom).stream().filter(cd -> !cd.getCityDestination().equals(cityTo)).findFirst().ifPresent(d -> d.addToPheromoneLevel(pheromoneLoosePerRound));
                 }
+            }
+            if (stagnateCounter >= antCount * roundCount * 0.3) { //czyli np. dla 100 rund spełnione jeżeli przez 30 rund nic się nie zmieniło
+                System.out.println("wykryto stagnacje! resetuje poziom feromonow");
+                stagnateCounter = 0;
+                cityNames.forEach(c ->
+                        distancesMap.get(c).forEach(DistanceToCity::resetPheromoneLevel)
+                );
             }
             System.out.println("Runda " + i + " zakonczona. Najlepszy dystans po tej rundzie: " + bestDistanceTotal + " a droga to:\n" + bestPath + "\n-------------------------------\n");
         }
