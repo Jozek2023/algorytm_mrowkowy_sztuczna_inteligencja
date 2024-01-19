@@ -16,7 +16,7 @@ public class AntAlgorithm {
     DistancesForAllMatrixGenerator distanceCalc = new DistancesForAllMatrixGenerator();
     RouteProbabilityCounter routeProbabilityCounter = new RouteProbabilityCounter();
 
-    public void init(int antCount, int roundCount, int alpha, int beta, int pheromoneMin, int pheromoneMax, int pheromoneLoosePerRound, int pheromoneGainPerRound) throws IOException {
+    public double init(int antCount, int roundCount, int alpha, int beta, int pheromoneMin, int pheromoneMax, int pheromoneLoosePerRound, int pheromoneGainPerRound) throws IOException {
         Random rand = new Random();
         List<City> cities = fileReader.readFileAndReturnListOfCities("miasta.txt");
 
@@ -60,8 +60,12 @@ public class AntAlgorithm {
                 for (int c = 0; c < visitedCities.size() - 1; c++) {
                     var cityTo = visitedCities.get(c + 1);
                     var cityFrom = visitedCities.get(c);
-                    distancesMap.get(cityTo).stream().filter(cd -> cd.getCityDestination().equals(cityFrom)).findFirst().ifPresent(d -> d.addToPheromoneLevel(pheromoneGainPerRound));
-                    distancesMap.get(cityFrom).stream().filter(cd -> cd.getCityDestination().equals(cityTo)).findFirst().ifPresent(d -> d.addToPheromoneLevel(pheromoneGainPerRound));
+                    distancesMap.get(cityTo).stream()
+                            .filter(cd -> cd.getCityDestination().equals(cityFrom))
+                            .findFirst().ifPresent(d -> d.addToPheromoneLevel(pheromoneGainPerRound));
+                    distancesMap.get(cityFrom).stream()
+                            .filter(cd -> cd.getCityDestination().equals(cityTo))
+                            .findFirst().ifPresent(d -> d.addToPheromoneLevel(pheromoneGainPerRound));
 
                     distancesMap.get(cityTo).stream().filter(cd -> !cd.getCityDestination().equals(cityFrom)).findFirst().ifPresent(d -> d.addToPheromoneLevel(pheromoneLoosePerRound));
                     distancesMap.get(cityFrom).stream().filter(cd -> !cd.getCityDestination().equals(cityTo)).findFirst().ifPresent(d -> d.addToPheromoneLevel(pheromoneLoosePerRound));
@@ -76,6 +80,7 @@ public class AntAlgorithm {
             }
             System.out.println("Runda " + i + " zakonczona. Najlepszy dystans po tej rundzie: " + bestDistanceTotal + " a droga to:\n" + bestPath + "\n-------------------------------\n");
         }
+        return bestDistanceTotal;
     }
 
     private double getDistanceToStartingPointFromLastVisitedCity(List<String> visitedCities, Map<String, List<DistanceToCity>> distancesMap) {

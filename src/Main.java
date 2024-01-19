@@ -31,6 +31,7 @@ public class Main {
         System.out.println("wyniki dla algorytmu mrowkowego: ");
         antAlgorithm.init(antCount, roundCount, alpha, beta, pheromoneMin, pheromoneMax, pheromoneLoosePerRound, pheromoneGainPerRound);
         System.out.println("Koniec");
+//        AntAlgorithmTest.testAntCount();
     }
 }
 
